@@ -17,12 +17,12 @@ public class MainFragment extends Fragment {
 
     public static final String TAG = "MAIN_FRAGMENT";
 
-    private RecyclerView listLamps;
+    private RecyclerView listLampsRV;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        
+        listLampsRV = container.findViewById(R.id.lampListRV);
 
         return inflater.inflate(R.layout.main_fragment, container, false);
     }
