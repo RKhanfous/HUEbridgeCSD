@@ -2,4 +2,6 @@
     <string name="app_name">HueEmulatorApp</string>
     <string name="placeholder_lamp_name">Placeholder Lamp Name</string>
     <string name="placeholder_lamp_modelid">Plchldr ModelId</string>
+    <string name="lamp_details">Lamp Details</string>
+    <string name="submit">Submit</string>
 </resources>
