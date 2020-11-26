@@ -3,18 +3,427 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorOffWhite">
 
-    <TextView
-        android:id="@+id/detailFragment"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/detail_header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Detail Fragment"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"/>
+        android:background="@color/colorPrimary"
+        android:layout_margin="8dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lamp_details"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_margin="12dp"
+            android:textSize="32sp"
+            android:textColor="@color/colorOffWhite"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/detail_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/detail_header"
+        android:layout_margin="8dp"
+        >
+
+        <TextView
+            android:id="@+id/lamp_id_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Lamp unique ID: "
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/lamp_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="8dp"
+            android:text="ID_PLACEHOLDER"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/lamp_type_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lamp_id_head"
+            android:text="Lamp type: "
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/lamp_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lamp_id"
+            android:layout_marginLeft="8dp"
+            android:text="TYPE_PLACEHOLDER"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/lamp_model_id_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lamp_type_head"
+            android:text="Lamp model ID: "
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/lamp_model_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lamp_type"
+            android:layout_marginLeft="8dp"
+            android:text="MODEL_ID_PLACEHOLDER"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/lamp_product_name_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lamp_model_id_head"
+            android:text="Lamp product name: "
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/lamp_product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lamp_model_id"
+            android:layout_marginLeft="8dp"
+            android:text="PRODUCT_NAME_PLACEHOLDER"
+            android:textSize="16sp"
+            />
+
+        <ImageView
+            android:id="@+id/lamp_detail_separator"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            app:layout_constraintTop_toBottomOf="@id/lamp_product_name_head"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@color/colorPrimary"
+            android:layout_marginHorizontal="64dp"
+            android:layout_marginVertical="4dp"
+            />
+
+        <TextView
+            android:id="@+id/lamp_name_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lamp_detail_separator"
+            android:text="Lamp name: "
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/lamp_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lamp_detail_separator"
+            android:layout_marginLeft="8dp"
+            android:text="NAME_PLACEHOLDER"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/lamp_hue_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lamp_name_head"
+            android:text="Hue value: "
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/lamp_hue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lamp_name"
+            android:layout_marginLeft="8dp"
+            android:text="HUE_PLACEHOLDER"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/lamp_sat_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lamp_hue_head"
+            android:text="Saturation value: "
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/lamp_sat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lamp_hue"
+            android:layout_marginLeft="8dp"
+            android:text="SAT_PLACEHOLDER"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/lamp_bri_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lamp_sat_head"
+            android:text="Brightness value: "
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/lamp_bri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lamp_sat"
+            android:layout_marginLeft="8dp"
+            android:text="NAME_PLACEHOLDER"
+            android:textSize="16sp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/detail_line"
+        android:layout_width="0dp"
+        android:layout_height="12dp"
+        app:layout_constraintTop_toBottomOf="@id/detail_panel"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/colorPrimary"
+        android:layout_margin="8dp"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mod_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/detail_line"
+        android:layout_margin="8dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/name_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingVertical="24dp"
+            >
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name: "
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="250dp"
+                android:layout_height="25dp"
+                app:layout_constraintLeft_toRightOf="@id/tvName"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <Button
+                android:id="@+id/btn_setName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@id/etName"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/submit"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorSecondary"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <ImageView
+            android:id="@+id/color_panel"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:layout_constraintTop_toBottomOf="@id/name_bar"
+            android:background="@color/colorPrimary"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/hue_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/color_panel"
+            >
+
+            <TextView
+                android:id="@+id/hue_head"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Hue"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                />
+
+            <SeekBar
+                android:id="@+id/hue_seekbar"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/hue_head"
+                android:thumbTint="@color/colorPrimary"
+                />
+
+            <TextView
+                android:id="@+id/tvHue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="32dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="16sp"
+                android:text="HUE"
+
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sat_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/hue_bar"
+            >
+
+            <TextView
+                android:id="@+id/sat_head"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Saturation"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                />
+
+            <SeekBar
+                android:id="@+id/sat_seekbar"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/sat_head"
+                android:thumbTint="@color/colorPrimary"
+                />
+
+            <TextView
+                android:id="@+id/tvSat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="32dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="16sp"
+                android:text="Sat"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bri_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/sat_bar"
+            >
+
+            <TextView
+                android:id="@+id/bri_head"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Brightness"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                />
+
+            <SeekBar
+                android:id="@+id/bri_seekbar"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/bri_head"
+                android:thumbTint="@color/colorPrimary"
+                />
+
+            <TextView
+                android:id="@+id/tvBri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="32dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="16sp"
+                android:text="Bri"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btn_setColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bri_bar"
+            android:text="@string/submit"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorSecondary"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
