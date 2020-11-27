@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.hueemulatorapp.Data.Lamp;
 import com.example.hueemulatorapp.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,9 +28,16 @@ public class MainActivity extends AppCompatActivity {
         mainframe.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
 
         Fragment mainFragment = new MainFragment();
+        Fragment detailFragment = new DetailFragment(new Lamp("id_placeholder", "lightbulb", "Restroom light", "Model ID", "Dim light", 120, 32767, 200, Lamp.EFFECT_NULL));
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, mainFragment, MainFragment.TAG)
-                .addToBackStack(MainFragment.TAG)
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_framelayout, detailFragment, DetailFragment.TAG)
+                .addToBackStack(DetailFragment.TAG)
                 .commit();
+
+//        getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, mainFragment, MainFragment.TAG)
+//                .addToBackStack(MainFragment.TAG)
+//                .commit();
     }
 }
