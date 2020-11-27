@@ -42,8 +42,8 @@ public class Lamp implements Serializable {
         return productName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getBri() {

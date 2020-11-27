@@ -101,7 +101,7 @@ public class DetailFragment extends Fragment {
 
         //      Set color section
         //Set color panel
-        this.colorPanel.setBackgroundColor(Color.HSVToColor(lamp.getHSV()));
+        UpdateColorPanel();
 
         //Set hue
         this.sbHue.setMin(lamp.MIN_HUE);
@@ -121,7 +121,86 @@ public class DetailFragment extends Fragment {
         this.sbBri.setProgress(lamp.getBri());
         this.tvValueBri.setText(lamp.getBri());
 
+        //Set buttons
+        this.btnName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lamp.setName(etName.getText().toString());
+                Lamp updated = lamp;
+
+                // do api call with lamp changing name
+            }
+        });
+
+        this.btnColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Lamp updated = lamp;
+
+                // do api call with lamp changing color
+            }
+        });
+
+        //Change color panel on seekbar change
+        this.sbHue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                lamp.setHue(sbHue.getProgress());
+                UpdateColorPanel();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        this.sbSat.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                lamp.setSat(sbSat.getProgress());
+                UpdateColorPanel();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        this.sbBri.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                lamp.setBri(sbBri.getProgress());
+                UpdateColorPanel();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
         return inflater.inflate(R.layout.detail_fragment, container, false);
+    }
+
+    private void UpdateColorPanel(){
+        this.colorPanel.setBackgroundColor(Color.HSVToColor(lamp.getHSV()));
     }
 
     //wrote this code then found out about setMin and setMax :)
