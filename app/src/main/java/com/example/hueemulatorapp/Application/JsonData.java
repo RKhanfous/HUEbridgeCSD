@@ -40,8 +40,4 @@ public class JsonData {
         }
         return postdata.toString();
     }
-    // json on/off
-    // json hue/bri/sat
-
-
 }

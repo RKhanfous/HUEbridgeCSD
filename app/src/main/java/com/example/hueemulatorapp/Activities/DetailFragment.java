@@ -148,7 +148,7 @@ public class DetailFragment extends Fragment {
 
                 Lamp updated = lamp;
 
-                // do api call with lamp changing name
+                // @TODO do api call with lamp changing name
             }
         });
 
@@ -161,7 +161,7 @@ public class DetailFragment extends Fragment {
 
                 Lamp updated = lamp;
 
-                // do api call with lamp changing color
+                // @TODO do api call with lamp changing color
             }
         });
 

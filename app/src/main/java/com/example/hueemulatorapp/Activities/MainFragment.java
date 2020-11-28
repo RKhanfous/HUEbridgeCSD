@@ -3,6 +3,7 @@ package com.example.hueemulatorapp.Activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,17 +60,21 @@ public class MainFragment extends Fragment implements HttpListener, OnItemClickL
             e.printStackTrace();
         }
 
+        // @TODO callback using HttpListener
+
 
         return inflater.inflate(R.layout.main_fragment, container, false);
     }
 
     @Override
     public void onLightsAvailable(List<Lamp> lamps) {
-
+        lampList.addAll(lamps);
+        apiHueAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onItemClick(int clickedPosition) {
-
+        replacer.replace(lampList.get(clickedPosition));
+        Log.d(MainFragment.class.getName(), "Clicked on item no. " + clickedPosition);
     }
 }
