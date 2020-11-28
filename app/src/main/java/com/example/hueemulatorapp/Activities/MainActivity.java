@@ -15,7 +15,7 @@ import android.widget.FrameLayout;
 import com.example.hueemulatorapp.Data.Lamp;
 import com.example.hueemulatorapp.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DetailFragmentReplacer {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,17 +27,18 @@ public class MainActivity extends AppCompatActivity {
         FrameLayout mainframe = findViewById(R.id.main_framelayout);
         mainframe.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
 
-        Fragment mainFragment = new MainFragment();
-        Fragment detailFragment = new DetailFragment(new Lamp("id_placeholder", "lightbulb", "Restroom light", "Model ID", "Dim light", 120, 32767, 200, Lamp.EFFECT_NULL));
+        Fragment mainFragment = new MainFragment(this, this);
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, mainFragment, MainFragment.TAG)
+                .addToBackStack(MainFragment.TAG)
+                .commit();
+    }
 
+    @Override
+    public void replace(Lamp lamp) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_framelayout, detailFragment, DetailFragment.TAG)
+                .replace(R.id.main_framelayout, new DetailFragment(lamp), DetailFragment.TAG)
                 .addToBackStack(DetailFragment.TAG)
                 .commit();
-
-//        getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, mainFragment, MainFragment.TAG)
-//                .addToBackStack(MainFragment.TAG)
-//                .commit();
     }
 }

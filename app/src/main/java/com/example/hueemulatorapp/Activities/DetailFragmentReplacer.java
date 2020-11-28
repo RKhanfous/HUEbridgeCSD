@@ -1,4 +1,9 @@
 package com.example.hueemulatorapp.Activities;
 
-public interface FragmentReplacer {
+import android.content.Context;
+
+import com.example.hueemulatorapp.Data.Lamp;
+
+public interface DetailFragmentReplacer {
+    void replace(Lamp lamp);
 }
