@@ -29,6 +29,7 @@
         />
 
     <ImageView
+        android:id="@+id/color_bar"
         android:layout_width="0dp"
         android:layout_height="12dp"
         android:layout_margin="8dp"
