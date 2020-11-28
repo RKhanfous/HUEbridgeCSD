@@ -47,6 +47,12 @@ public class DetailFragment extends Fragment {
     private TextView tvValueSat;
     private TextView tvValueBri;
 
+    /**
+     * httpClient.put(JsonData.lights + "/" + "modelId", "json string");
+     *
+     * httpClient.put(JsonData.lights + "/" + "modelId" + JsonData.setState, "jsonString");
+     */
+
     public DetailFragment(Lamp lamp){
         super();
         this.lamp = lamp;

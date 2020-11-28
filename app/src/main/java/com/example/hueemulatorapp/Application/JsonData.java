@@ -5,6 +5,10 @@ import org.json.JSONObject;
 
 public class JsonData {
 
+    public static final String lights = "/api/logophilist/lights";
+    public static final String setState = "/state";
+
+
     public static String putJsonLightsRename(String name){
         JSONObject postdata = new JSONObject();
         try{
