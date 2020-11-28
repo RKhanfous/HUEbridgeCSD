@@ -15,12 +15,14 @@ public class Lamp implements Serializable {
     private int sat;
     private String effect;
 
-    public final int MIN_BRI = 1;
-    public final int MAX_BRI = 254;
-    public final int MIN_HUE = 0;
-    public final int MAX_HUE = 65535;
-    public final int MIN_SAT = 0;
-    public final int MAX_SAT = 254;
+    public static final int MIN_BRI = 1;
+    public static final int MAX_BRI = 254;
+    public static final int MIN_HUE = 0;
+    public static final int MAX_HUE = 65535;
+    public static final int MIN_SAT = 0;
+    public static final int MAX_SAT = 254;
+    public static final String EFFECT_NULL = "none";
+    public static final String EFFECT_COLOR_LOOP = "colorloop";
 
     public Lamp(String id, String type, String name, String modelId, String productName, int bri, int hue, int sat, String effect) {
         this.id = id;
@@ -35,15 +37,15 @@ public class Lamp implements Serializable {
     }
 
     public float[] getHSV(){
-        return new float[]{(float)this.hue/(float)MAX_HUE, (float)this.sat/(float)MAX_SAT, (float)this.bri/(float)MAX_BRI};
+        return new float[]{(float)this.hue/(float)MAX_HUE * 360, (float)this.sat/(float)MAX_SAT, (float)this.bri/(float)MAX_BRI};
     }
 
     public String getProductName() {
         return productName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getBri() {

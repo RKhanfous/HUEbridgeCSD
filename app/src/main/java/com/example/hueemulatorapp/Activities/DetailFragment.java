@@ -3,6 +3,7 @@ package com.example.hueemulatorapp.Activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,11 @@ import com.example.hueemulatorapp.R;
 
 public class DetailFragment extends Fragment {
 
+    public static final String TAG = "DETAIL_FRAGMENT";
+
     private Lamp lamp;
+
+    private ViewGroup container;
 
     private TextView tvName;
     private TextView tvHue;
@@ -48,14 +53,24 @@ public class DetailFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        this.init();
+        super.onStart();
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        this.container = container;
+        return inflater.inflate(R.layout.detail_fragment, container, false);
+    }
+
+    private void init(){
 
         //Find non-changeable TV's
         TextView tvUniqueId = container.findViewById(R.id.lamp_id);
         TextView tvType = container.findViewById(R.id.lamp_type);
         TextView tvModelId = container.findViewById(R.id.lamp_model_id);
         TextView tvProductName = container.findViewById(R.id.lamp_product_name);
-
         //Set non-changeable TV's
         tvUniqueId.setText(lamp.getId());
         tvType.setText(lamp.getType());
@@ -71,9 +86,9 @@ public class DetailFragment extends Fragment {
 
         //Set changable TV's
         this.tvName.setText(lamp.getName());
-        this.tvHue.setText(lamp.getHue());
-        this.tvSat.setText(lamp.getSat());
-        this.tvBri.setText(lamp.getBri());
+        this.tvHue.setText(String.valueOf(lamp.getHue()));
+        this.tvSat.setText(String.valueOf(lamp.getSat()));
+        this.tvBri.setText(String.valueOf(lamp.getBri()));
 
 
         //Find name section
@@ -101,39 +116,123 @@ public class DetailFragment extends Fragment {
 
         //      Set color section
         //Set color panel
-        this.colorPanel.setBackgroundColor(Color.HSVToColor(lamp.getHSV()));
+        UpdateColorPanel();
 
         //Set hue
-        this.sbHue.setMin(lamp.MIN_HUE);
-        this.sbHue.setMax(lamp.MAX_HUE);
+        this.sbHue.setMin(Lamp.MIN_HUE);
+        this.sbHue.setMax(Lamp.MAX_HUE);
         this.sbHue.setProgress(lamp.getHue());
-        this.tvValueHue.setText(lamp.getHue());
 
         //Set saturation
-        this.sbSat.setMin(lamp.MIN_SAT);
-        this.sbSat.setMax(lamp.MAX_SAT);
+        this.sbSat.setMin(Lamp.MIN_SAT);
+        this.sbSat.setMax(Lamp.MAX_SAT);
         this.sbSat.setProgress(lamp.getSat());
-        this.tvValueSat.setText(lamp.getSat());
 
         //Set brightness
-        this.sbBri.setMin(lamp.MIN_BRI);
-        this.sbBri.setMax(lamp.MAX_BRI);
+        this.sbBri.setMin(Lamp.MIN_BRI);
+        this.sbBri.setMax(Lamp.MAX_BRI);
         this.sbBri.setProgress(lamp.getBri());
-        this.tvValueBri.setText(lamp.getBri());
 
-        return inflater.inflate(R.layout.detail_fragment, container, false);
+        //Set buttons
+        this.btnName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lamp.setName(etName.getText().toString());
+                tvName.setText(lamp.getName());
+
+                Lamp updated = lamp;
+
+                // do api call with lamp changing name
+            }
+        });
+
+        this.btnColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvHue.setText(String.valueOf(lamp.getHue()));
+                tvSat.setText(String.valueOf(lamp.getSat()));
+                tvBri.setText(String.valueOf(lamp.getBri()));
+
+                Lamp updated = lamp;
+
+                // do api call with lamp changing color
+            }
+        });
+
+        //Change color panel on seekbar change
+        this.sbHue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                lamp.setHue(getInRange(sbHue.getProgress(), Lamp.MIN_HUE, Lamp.MAX_HUE));
+                Log.d(DetailFragment.TAG, "HSV: [" + lamp.getHSV()[0] + ", " + lamp.getHSV()[1] + ", " + lamp.getHSV()[2] + "]");
+                UpdateColorPanel();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        this.sbSat.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                lamp.setSat(sbSat.getProgress());
+                UpdateColorPanel();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        this.sbBri.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                lamp.setBri(sbBri.getProgress());
+                UpdateColorPanel();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
+
+    private void UpdateColorPanel(){
+        this.colorPanel.setBackgroundColor(Color.HSVToColor(255, lamp.getHSV()));
+        this.tvValueHue.setText(String.valueOf(lamp.getHue()));
+        this.tvValueSat.setText(String.valueOf(lamp.getSat()));
+        this.tvValueBri.setText(String.valueOf(lamp.getBri()));
     }
 
     //wrote this code then found out about setMin and setMax :)
 
-//    private int getInRange(int value, int min, int max){
-//        if (value < min){
-//            value = min;
-//        } else if (value > max){
-//            value = max;
-//        }
-//        return value;
-//    }
+    private int getInRange(int value, int min, int max){
+        if (value < min){
+            value = min;
+        } else if (value > max){
+            value = max;
+        }
+        return value;
+    }
 //
 //    private int toLampHue(int progressHue){
 //        return getInRange(progressHue * lamp.MAX_HUE / 1000, 0, lamp.MAX_HUE);
