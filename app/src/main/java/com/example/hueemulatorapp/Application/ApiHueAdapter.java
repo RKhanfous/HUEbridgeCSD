@@ -63,6 +63,7 @@ public class ApiHueAdapter extends RecyclerView.Adapter<ApiHueAdapter.ImageViewH
             tvName = itemView.findViewById(R.id.tvNameLamp);
             tvModelId = itemView.findViewById(R.id.tvModelIdLamp);
             color_bar = itemView.findViewById(R.id.color_bar);
+            itemView.setOnClickListener(this);
         }
 
         @Override
