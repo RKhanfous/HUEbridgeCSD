@@ -21,11 +21,18 @@ import com.example.hueemulatorapp.Application.JsonData;
 import com.example.hueemulatorapp.Data.Lamp;
 import com.example.hueemulatorapp.R;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainFragment extends Fragment implements HttpListener, OnItemClickListener{
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
+
+public class MainFragment extends Fragment implements OnItemClickListener{
 
     public static final String TAG = "MAIN_FRAGMENT";
 
@@ -38,35 +45,59 @@ public class MainFragment extends Fragment implements HttpListener, OnItemClickL
     private Context context;
     private DetailFragmentReplacer replacer;
 
+    private ViewGroup container;
+
     public MainFragment(DetailFragmentReplacer replacer, Context context){
         this.replacer = replacer;
         this.context = context;
     }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+    private void init(){
         lampList = new ArrayList<>();
         listLampsRV = container.findViewById(R.id.lampListRV);
         apiHueAdapter = new ApiHueAdapter(lampList, this);
         listLampsRV.setAdapter(apiHueAdapter);
         listLampsRV.setLayoutManager(new LinearLayoutManager(this.context));
 
-
         this.httpClient = new HttpClient();
         try {
-            httpClient.get(JsonData.lights);
+            Request requestGetLights = httpClient.get(JsonData.uri + JsonData.lights);
+            httpClient.send(requestGetLights, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    System.out.println("I DO GET HERE");
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    try {
+                        List<Lamp> lamps = JsonData.readGetLightsResponse(response.body().string());
+                        lamps.add(new Lamp("id", ""))
+                        onLightsAvailable(lamps);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        // @TODO callback using HttpListener
 
-
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        this.container = container;
         return inflater.inflate(R.layout.main_fragment, container, false);
     }
 
     @Override
+    public void onStart() {
+        this.init();
+        super.onStart();
+    }
+
     public void onLightsAvailable(List<Lamp> lamps) {
         lampList.addAll(lamps);
         apiHueAdapter.notifyDataSetChanged();
