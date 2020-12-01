@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LampTest {
 
     Lamp makeTestValues(){
-        return new Lamp("00:17:88:01:00:d4:12:08-0a", "Extended color light", "Hue Lamp 1", "LCT001", true, 254, 4444, 254, "none");
+        return new Lamp("00:17:88:01:00:d4:12:08-0a", "Extended color light", "Hue Lamp 1", "LCT001", "name", true, 254, 4444, 254, "none");
     }
     @Test
     void getHSVTest() {

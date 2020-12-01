@@ -25,7 +25,7 @@ public class Lamp implements Serializable {
     public static final String EFFECT_NULL = "none";
     public static final String EFFECT_COLOR_LOOP = "colorloop";
 
-    public Lamp(String id, String type, String name, String modelId, boolean lightsOn, int bri, int hue, int sat, String effect) {
+    public Lamp(String id, String type, String name, String modelId, String productName, boolean lightsOn, int bri, int hue, int sat, String effect) {
         this.id = id;
         this.type = type;
         this.name = name;

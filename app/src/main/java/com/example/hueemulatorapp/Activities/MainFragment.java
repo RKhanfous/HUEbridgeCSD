@@ -2,7 +2,6 @@ package com.example.hueemulatorapp.Activities;
 
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,22 +19,18 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.hueemulatorapp.Application.ApiHueAdapter;
 import com.example.hueemulatorapp.Application.GetLightsCallback;
 import com.example.hueemulatorapp.Application.HttpClient;
+import com.example.hueemulatorapp.Application.HttpListener;
 import com.example.hueemulatorapp.Application.JsonData;
 import com.example.hueemulatorapp.Data.Lamp;
 import com.example.hueemulatorapp.R;
-
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Request;
-import okhttp3.Response;
 
-public class MainFragment extends Fragment implements OnItemClickListener, HttpListener{
+public class MainFragment extends Fragment implements OnItemClickListener, HttpListener {
 
     public static final String TAG = "MAIN_FRAGMENT";
 
