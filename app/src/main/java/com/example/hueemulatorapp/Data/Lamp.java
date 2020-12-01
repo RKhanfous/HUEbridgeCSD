@@ -37,6 +37,10 @@ public class Lamp implements Serializable {
         this.effect = effect;
     }
 
+    public static Lamp Dummy(){
+        return new Lamp("id", "type", "name", "modelid", "productname", true, 0, 0, 0, "none");
+    }
+
     public float[] getHSV(){
         return new float[]{(float)this.hue/(float)MAX_HUE * 360, (float)this.sat/(float)MAX_SAT, (float)this.bri/(float)MAX_BRI};
     }

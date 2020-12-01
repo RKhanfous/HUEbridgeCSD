@@ -2,6 +2,7 @@ package com.example.hueemulatorapp.Activities;
 
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,11 +11,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.hueemulatorapp.Application.ApiHueAdapter;
+import com.example.hueemulatorapp.Application.GetLightsCallback;
 import com.example.hueemulatorapp.Application.HttpClient;
 import com.example.hueemulatorapp.Application.JsonData;
 import com.example.hueemulatorapp.Data.Lamp;
@@ -31,7 +35,7 @@ import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainFragment extends Fragment implements OnItemClickListener{
+public class MainFragment extends Fragment implements OnItemClickListener, HttpListener{
 
     public static final String TAG = "MAIN_FRAGMENT";
 
@@ -59,26 +63,28 @@ public class MainFragment extends Fragment implements OnItemClickListener{
         listLampsRV.setLayoutManager(new LinearLayoutManager(this.context));
 
         this.httpClient = new HttpClient();
+
+        final SwipeRefreshLayout swipeRefreshLayout = container.findViewById(R.id.swipeToRefresh);
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(context, R.color.colorPrimary), ContextCompat.getColor(context, R.color.colorSecondary));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                reloadLights();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        loadLights();
+
+    }
+    private void reloadLights(){
+        this.lampList = new ArrayList<>();
+        loadLights();
+    }
+
+    private void loadLights(){
         try {
             Request requestGetLights = httpClient.get(JsonData.uri + JsonData.lights);
-            httpClient.send(requestGetLights, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    System.out.println("I DO GET HERE");
-                    e.printStackTrace();
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    try {
-                        List<Lamp> lamps = JsonData.readGetLightsResponse(response.body().string());
-                        //lamps.add(new Lamp("id", ""));
-                        onLightsAvailable(lamps);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+            httpClient.send(requestGetLights, new GetLightsCallback(this));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -97,9 +103,15 @@ public class MainFragment extends Fragment implements OnItemClickListener{
         super.onStart();
     }
 
+    @Override
     public void onLightsAvailable(List<Lamp> lamps) {
         lampList.addAll(lamps);
-        apiHueAdapter.notifyDataSetChanged();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                apiHueAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
