@@ -5,6 +5,7 @@ import android.util.Log;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -17,29 +18,32 @@ public class HttpClient {
 
     private static final String TAG = OkHttpClient.class.getSimpleName();
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private OkHttpClient httpClient = new OkHttpClient();
+    private OkHttpClient httpClient = new OkHttpClient.Builder()
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .build();
 
-    public Response get(String url) throws IOException {
+    public Request get(String url) throws IOException {
         Log.i(TAG, "Sending a get request with URL: " + url);
         Request request = new Request.Builder()
                 .url(url)
                 .get()
                 .build();
-        return httpClient.newCall(request).execute();
+        return request;
     }
 
-    public Response put(String url, String json) throws IOException {
+    public Request put(String url, String json) throws IOException {
         Log.i(TAG, "Sending a put request with body:\n" + json + "\n to URL: " + url);
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(url)
                 .put(body)
                 .build();
-        return httpClient.newCall(request).execute();
+        return request;
     }
 
-    public void setCallback(Request request, Callback callback){
+    public void send(Request request, Callback callback){
         httpClient.newCall(request).enqueue(callback);
-        JSONObject jsonObject = new JSONObject();
     }
 }
