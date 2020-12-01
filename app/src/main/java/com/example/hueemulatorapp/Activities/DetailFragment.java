@@ -81,7 +81,6 @@ public class DetailFragment extends Fragment {
         tvUniqueId.setText(lamp.getId());
         tvType.setText(lamp.getType());
         tvModelId.setText(lamp.getModelId());
-        tvProductName.setText(lamp.getProductName());
 
 
         //Find changable TV's

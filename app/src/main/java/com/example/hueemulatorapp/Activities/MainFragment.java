@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hueemulatorapp.Application.ApiHueAdapter;
 import com.example.hueemulatorapp.Application.HttpClient;
-import com.example.hueemulatorapp.Application.HttpListener;
 import com.example.hueemulatorapp.Application.JsonData;
 import com.example.hueemulatorapp.Data.Lamp;
 import com.example.hueemulatorapp.R;
@@ -73,7 +72,7 @@ public class MainFragment extends Fragment implements OnItemClickListener{
                 public void onResponse(Call call, Response response) throws IOException {
                     try {
                         List<Lamp> lamps = JsonData.readGetLightsResponse(response.body().string());
-                        lamps.add(new Lamp("id", ""))
+                        //lamps.add(new Lamp("id", ""));
                         onLightsAvailable(lamps);
                     } catch (JSONException e) {
                         e.printStackTrace();

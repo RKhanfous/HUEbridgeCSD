@@ -1,16 +1,13 @@
 package com.example.hueemulatorapp.Application;
 
-import android.util.JsonReader;
 import android.util.Log;
 
 import com.example.hueemulatorapp.Data.Lamp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class JsonData {
 
@@ -22,35 +19,17 @@ public class JsonData {
 
 
     public static String getBodyRename(String name){
-        JSONObject body = new JSONObject();
-        try{
-            body.put("name", name);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return body.toString();
+        return "{\"name\":" + "\"" + name + "\"}";
     }
 
+
+
     public static String getBodyLightOn(Boolean lightOn){
-        JSONObject body = new JSONObject();
-        try{
-            body.put("on", lightOn);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return body.toString();
+        return "{\"on\":" + "\"" + lightOn.toString() + "\"}";
     }
 
     public static String getBodyColor(int hue, int bri, int sat){
-        JSONObject body = new JSONObject();
-        try{
-            body.put("hue", hue);
-            body.put("bri", bri);
-            body.put("sat", sat);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return body.toString();
+        return "{\"hue\":" + "\"" + hue + "\"," + "\"bri\":" + "\"" + bri + "\"," + "\"sat\":" + "\"" + sat + "\"}";
     }
 
     public static ArrayList<Lamp> readGetLightsResponse(String jsonResponse) throws JSONException {
@@ -68,7 +47,6 @@ public class JsonData {
                         addingJson.getString("type"), //Get type.
                         addingJson.getString("name"), //Get Name
                         addingJson.getString("modelid"), //Get model ID
-                        addingJson.getString("productname"),
                         state.getBoolean("on"), // Get lights on
                         state.getInt("bri"), // Get brightness
                         state.getInt("hue"), // Get Hue
