@@ -79,6 +79,8 @@ public class MainFragment extends Fragment implements OnItemClickListener, HttpL
     }
     private void reloadLights(){
         this.lampList = new ArrayList<>();
+        apiHueAdapter = new ApiHueAdapter(lampList, this);
+        listLampsRV.setAdapter(apiHueAdapter);
         loadLights();
     }
 
