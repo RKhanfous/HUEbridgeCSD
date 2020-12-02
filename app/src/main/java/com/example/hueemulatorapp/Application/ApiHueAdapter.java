@@ -1,6 +1,5 @@
 package com.example.hueemulatorapp.Application;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,8 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hueemulatorapp.Activities.OnItemClickListener;
-import com.example.hueemulatorapp.Data.Lamp;
+import com.example.hueemulatorapp.Data.DimLight;
 import com.example.hueemulatorapp.R;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -22,11 +23,11 @@ public class ApiHueAdapter extends RecyclerView.Adapter<ApiHueAdapter.ImageViewH
 
     private static final String TAG = ApiHueAdapter.class.getName();
 
-    private List<Lamp> lampList;
+    private List<DimLight> lightList;
     private OnItemClickListener clickListener;
 
-    public ApiHueAdapter(List<Lamp> lamps, OnItemClickListener listener){
-        this.lampList = lamps;
+    public ApiHueAdapter(List<DimLight> lights, OnItemClickListener listener){
+        this.lightList = lights;
         this.clickListener = listener;
     }
 
@@ -41,27 +42,30 @@ public class ApiHueAdapter extends RecyclerView.Adapter<ApiHueAdapter.ImageViewH
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder() called for item " + position);
-        Lamp lamp = lampList.get(position);
-        holder.tvName.setText(lamp.getName());
-        holder.tvModelId.setText(lamp.getModelId());
-        holder.color_bar.setBackgroundColor(Color.HSVToColor(lamp.getHSV()));
+        DimLight light = lightList.get(position);
+        holder.tvName.setText(light.getName());
+        holder.tvModelId.setText(light.getModelId());
+        holder.tvType.setText(light.getType());
+        holder.color_bar.setBackgroundColor(Color.HSVToColor(light.getHSV()));
     }
 
     @Override
     public int getItemCount() {
-        return lampList.size();
+        return lightList.size();
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public final TextView tvName;
         public final TextView tvModelId;
+        public final TextView tvType;
         public final ImageView color_bar;
 
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvNameLamp);
-            tvModelId = itemView.findViewById(R.id.tvModelIdLamp);
+            tvModelId = itemView.findViewById(R.id.tvModelId);
+            tvType = itemView.findViewById(R.id.tvTypeLamp);
             color_bar = itemView.findViewById(R.id.color_bar);
             itemView.setOnClickListener(this);
         }

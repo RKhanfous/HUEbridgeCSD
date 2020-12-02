@@ -2,6 +2,9 @@ package com.example.hueemulatorapp.Data;
 
 public class Light {
 
+    public static final String TYPE_DIM = "Dimmable light";
+    public static final String TYPE_HUE = "Extended color light";
+
     public static final float DIM_HUE = 0.144f;
     public static final float DIM_SAT = 0.58f;
 

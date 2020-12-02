@@ -2,6 +2,7 @@ package com.example.hueemulatorapp.Application;
 
 import android.util.Log;
 
+import com.example.hueemulatorapp.Data.DimLight;
 import com.example.hueemulatorapp.Data.Lamp;
 
 import org.json.JSONException;
@@ -15,7 +16,6 @@ import okhttp3.Response;
 
 public class GetLightsCallback implements Callback {
 
-    ApiHueAdapter hueAdapter;
     HttpListener httpListener;
 
     public GetLightsCallback(HttpListener httpListener){
@@ -30,11 +30,11 @@ public class GetLightsCallback implements Callback {
     @Override
     public void onResponse(Call call, Response response) throws IOException {
         try {
-            List<Lamp> lamps = JsonData.readGetLightsResponse(response.body().string());
-            for (Lamp lamp : lamps) {
-                Log.i(GetLightsCallback.class.getName(), "Found Lamp: " + lamp.getName());
+            List<DimLight> lights = JsonData.readGetLightsResponse(response.body().string());
+            for (DimLight light : lights) {
+                Log.i(GetLightsCallback.class.getName(), "Found Lamp: " + light.getName());
             }
-            httpListener.onLightsAvailable(lamps);
+            httpListener.onLightsAvailable(lights);
         } catch (JSONException e) {
             e.printStackTrace();
         }
