@@ -6,8 +6,9 @@ public class HueLight extends DimLight {
     private int sat;
     private String effect;
 
-    public HueLight(String id, String type, String name, String modelId, boolean on, int hue, int sat, int bri, String effect) {
-        super(id, type, name, modelId, on, bri);
+    public HueLight(String id, String name, String modelId, boolean on, int hue, int sat, int bri, String effect) {
+        super(id, name, modelId, on, bri);
+        this.type = "Extended color light";
         this.hue = hue;
         this.sat = sat;
         this.effect = effect;

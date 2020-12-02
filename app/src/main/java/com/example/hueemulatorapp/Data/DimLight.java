@@ -2,20 +2,25 @@ package com.example.hueemulatorapp.Data;
 
 public class DimLight {
     private String id;
-    private String type;
     private String name;
     private String modelId;
+
+    protected String type;
 
     private boolean on;
     private int bri;
 
-    public DimLight(String id, String type, String name, String modelId, boolean on, int bri) {
+    public DimLight(String id, String name, String modelId, boolean on, int bri) {
         this.id = id;
-        this.type = type;
         this.name = name;
         this.modelId = modelId;
         this.on = on;
         this.bri = bri;
+        this.type = "Dimmable light";
+    }
+
+    public String getType(){
+        return this.type;
     }
 
     public float[] getHSV(){
@@ -24,10 +29,6 @@ public class DimLight {
 
     public String getId() {
         return id;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public String getModelId() {
