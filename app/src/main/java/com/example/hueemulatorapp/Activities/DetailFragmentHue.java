@@ -17,14 +17,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.hueemulatorapp.Data.HueLight;
 import com.example.hueemulatorapp.Data.Lamp;
+import com.example.hueemulatorapp.Data.Light;
 import com.example.hueemulatorapp.R;
 
-public class DetailFragment extends Fragment {
+public class DetailFragmentHue extends Fragment {
 
-    public static final String TAG = "DETAIL_FRAGMENT";
+    public static final String TAG = DetailFragmentHue.class.getName();
 
-    private Lamp lamp;
+    private HueLight light;
 
     private ViewGroup container;
 
@@ -53,9 +55,9 @@ public class DetailFragment extends Fragment {
      * httpClient.put(JsonData.lights + "/" + "modelId" + JsonData.setState, "jsonString");
      */
 
-    public DetailFragment(Lamp lamp){
+    public DetailFragmentHue(HueLight light){
         super();
-        this.lamp = lamp;
+        this.light = light;
     }
 
     @Override
@@ -76,12 +78,10 @@ public class DetailFragment extends Fragment {
         TextView tvUniqueId = container.findViewById(R.id.lamp_id);
         TextView tvType = container.findViewById(R.id.lamp_type);
         TextView tvModelId = container.findViewById(R.id.lamp_model_id);
-        TextView tvProductName = container.findViewById(R.id.lamp_product_name);
         //Set non-changeable TV's
-        tvUniqueId.setText(lamp.getId());
-        tvType.setText(lamp.getType());
-        tvModelId.setText(lamp.getModelId());
-        tvProductName.setText(lamp.getProductName());
+        tvUniqueId.setText(light.getId());
+        tvType.setText(light.getType());
+        tvModelId.setText(light.getModelId());
 
 
         //Find changable TV's
@@ -91,10 +91,10 @@ public class DetailFragment extends Fragment {
         this.tvBri = container.findViewById(R.id.lamp_bri);
 
         //Set changable TV's
-        this.tvName.setText(lamp.getName());
-        this.tvHue.setText(String.valueOf(lamp.getHue()));
-        this.tvSat.setText(String.valueOf(lamp.getSat()));
-        this.tvBri.setText(String.valueOf(lamp.getBri()));
+        this.tvName.setText(light.getName());
+        this.tvHue.setText(String.valueOf(light.getHue()));
+        this.tvSat.setText(String.valueOf(light.getSat()));
+        this.tvBri.setText(String.valueOf(light.getBri()));
 
 
         //Find name section
@@ -102,7 +102,7 @@ public class DetailFragment extends Fragment {
         this.btnName = container.findViewById(R.id.btn_setName);
 
         //Set name section
-        this.etName.setText(lamp.getName());
+        this.etName.setText(light.getName());
 
 
         //Find color section
@@ -125,28 +125,28 @@ public class DetailFragment extends Fragment {
         UpdateColorPanel();
 
         //Set hue
-        this.sbHue.setMin(Lamp.MIN_HUE);
-        this.sbHue.setMax(Lamp.MAX_HUE);
-        this.sbHue.setProgress(lamp.getHue());
+        this.sbHue.setMin(Light.MIN_HUE);
+        this.sbHue.setMax(Light.MAX_HUE);
+        this.sbHue.setProgress(light.getHue());
 
         //Set saturation
-        this.sbSat.setMin(Lamp.MIN_SAT);
-        this.sbSat.setMax(Lamp.MAX_SAT);
-        this.sbSat.setProgress(lamp.getSat());
+        this.sbSat.setMin(Light.MIN_SAT);
+        this.sbSat.setMax(Light.MAX_SAT);
+        this.sbSat.setProgress(light.getSat());
 
         //Set brightness
-        this.sbBri.setMin(Lamp.MIN_BRI);
-        this.sbBri.setMax(Lamp.MAX_BRI);
-        this.sbBri.setProgress(lamp.getBri());
+        this.sbBri.setMin(Light.MIN_BRI);
+        this.sbBri.setMax(Light.MAX_BRI);
+        this.sbBri.setProgress(light.getBri());
 
         //Set buttons
         this.btnName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lamp.setName(etName.getText().toString());
-                tvName.setText(lamp.getName());
+                light.setName(etName.getText().toString());
+                tvName.setText(light.getName());
 
-                Lamp updated = lamp;
+                HueLight updated = light;
 
                 // @TODO do api call with lamp changing name
             }
@@ -155,11 +155,11 @@ public class DetailFragment extends Fragment {
         this.btnColor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvHue.setText(String.valueOf(lamp.getHue()));
-                tvSat.setText(String.valueOf(lamp.getSat()));
-                tvBri.setText(String.valueOf(lamp.getBri()));
+                tvHue.setText(String.valueOf(light.getHue()));
+                tvSat.setText(String.valueOf(light.getSat()));
+                tvBri.setText(String.valueOf(light.getBri()));
 
-                Lamp updated = lamp;
+                HueLight updated = light;
 
                 // @TODO do api call with lamp changing color
             }
@@ -169,8 +169,8 @@ public class DetailFragment extends Fragment {
         this.sbHue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                lamp.setHue(getInRange(sbHue.getProgress(), Lamp.MIN_HUE, Lamp.MAX_HUE));
-                Log.d(DetailFragment.TAG, "HSV: [" + lamp.getHSV()[0] + ", " + lamp.getHSV()[1] + ", " + lamp.getHSV()[2] + "]");
+                light.setHue(getInRange(sbHue.getProgress(), Lamp.MIN_HUE, Lamp.MAX_HUE));
+//                Log.d(DetailFragmentHue.TAG, "HSV: [" + light.getHSV()[0] + ", " + light.getHSV()[1] + ", " + light.getHSV()[2] + "]");
                 UpdateColorPanel();
             }
 
@@ -188,7 +188,7 @@ public class DetailFragment extends Fragment {
         this.sbSat.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                lamp.setSat(sbSat.getProgress());
+                light.setSat(sbSat.getProgress());
                 UpdateColorPanel();
             }
 
@@ -206,7 +206,7 @@ public class DetailFragment extends Fragment {
         this.sbBri.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                lamp.setBri(sbBri.getProgress());
+                light.setBri(sbBri.getProgress());
                 UpdateColorPanel();
             }
 
@@ -223,10 +223,10 @@ public class DetailFragment extends Fragment {
     }
 
     private void UpdateColorPanel(){
-        this.colorPanel.setBackgroundColor(Color.HSVToColor(255, lamp.getHSV()));
-        this.tvValueHue.setText(String.valueOf(lamp.getHue()));
-        this.tvValueSat.setText(String.valueOf(lamp.getSat()));
-        this.tvValueBri.setText(String.valueOf(lamp.getBri()));
+        this.colorPanel.setBackgroundColor(Color.HSVToColor(255, light.getHSV()));
+        this.tvValueHue.setText(String.valueOf(light.getHue()));
+        this.tvValueSat.setText(String.valueOf(light.getSat()));
+        this.tvValueBri.setText(String.valueOf(light.getBri()));
     }
 
     //wrote this code then found out about setMin and setMax :)
@@ -239,28 +239,4 @@ public class DetailFragment extends Fragment {
         }
         return value;
     }
-//
-//    private int toLampHue(int progressHue){
-//        return getInRange(progressHue * lamp.MAX_HUE / 1000, 0, lamp.MAX_HUE);
-//    }
-//
-//    private int toProgressHue(int lampHue){
-//        return getInRange(lampHue * 1000 / lamp.MAX_HUE, 0, 1000);
-//    }
-//
-//    private int toLampSat(int progressSat){
-//        return getInRange(progressSat * lamp.MAX_SAT / 1000, 0, lamp.MAX_SAT);
-//    }
-//
-//    private int toProgressSat(int lampSat){
-//        return getInRange(lampSat * 1000 / lamp.MAX_SAT, 0, 1000);
-//    }
-//
-//    private int toLampBri(int progressBri){
-//        return getInRange(progressBri * lamp.MAX_BRI / 1000, 1, lamp.MAX_BRI);
-//    }
-//
-//    private int toProgressBri(int lampBri){
-//        return getInRange(lampBri * 1000 / lamp.MAX_BRI, 0, 1000);
-//    }
 }
