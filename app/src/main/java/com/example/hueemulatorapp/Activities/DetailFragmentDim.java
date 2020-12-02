@@ -1,0 +1,174 @@
+package com.example.hueemulatorapp.Activities;
+
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.example.hueemulatorapp.Data.DimLight;
+import com.example.hueemulatorapp.Data.Lamp;
+import com.example.hueemulatorapp.Data.Light;
+import com.example.hueemulatorapp.R;
+
+public class DetailFragmentDim extends Fragment {
+
+    public static final String TAG = DetailFragmentDim.class.getName();
+
+    private DimLight light;
+
+    private ViewGroup container;
+
+    private TextView tvName;
+    private TextView tvBri;
+
+    private EditText etName;
+    private Button btnName;
+
+    private ImageView colorPanel;
+
+    private SeekBar sbBri;
+    private Button btnColor;
+
+    private TextView tvValueBri;
+
+    /**
+     * httpClient.put(JsonData.lights + "/" + "modelId", "json string");
+     * <p>
+     * httpClient.put(JsonData.lights + "/" + "modelId" + JsonData.setState, "jsonString");
+     */
+
+    public DetailFragmentDim(DimLight light) {
+        super();
+        this.light = light;
+    }
+
+    @Override
+    public void onStart() {
+        this.init();
+        super.onStart();
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        this.container = container;
+        return inflater.inflate(R.layout.detail_fragment_dim, container, false);
+    }
+
+    private void init() {
+
+        //Find non-changeable TV's
+        TextView tvUniqueId = container.findViewById(R.id.lamp_id);
+        TextView tvType = container.findViewById(R.id.lamp_type);
+        TextView tvModelId = container.findViewById(R.id.lamp_model_id);
+        //Set non-changeable TV's
+        tvUniqueId.setText(light.getId());
+        tvType.setText(light.getType());
+        tvModelId.setText(light.getModelId());
+
+
+        //Find changable TV's
+        this.tvName = container.findViewById(R.id.lamp_name);
+        this.tvBri = container.findViewById(R.id.lamp_bri);
+
+        //Set changable TV's
+        this.tvName.setText(light.getName());
+        this.tvBri.setText(String.valueOf(light.getBri()));
+
+
+        //Find name section
+        this.etName = container.findViewById(R.id.etName);
+        this.btnName = container.findViewById(R.id.btn_setName);
+
+        //Set name section
+        this.etName.setText(light.getName());
+
+
+        //Find color section
+        this.colorPanel = container.findViewById(R.id.color_panel);
+
+        this.sbBri = container.findViewById(R.id.bri_seekbar);
+        this.tvValueBri = container.findViewById(R.id.tvBri);
+
+        this.btnColor = container.findViewById(R.id.btn_setColor);
+
+
+        //      Set color section
+        //Set color panel
+        UpdateColorPanel();
+
+        //Set brightness
+        this.sbBri.setMin(Light.MIN_BRI);
+        this.sbBri.setMax(Light.MAX_BRI);
+        this.sbBri.setProgress(light.getBri());
+
+        //Set buttons
+        this.btnName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                light.setName(etName.getText().toString());
+                tvName.setText(light.getName());
+
+                DimLight updated = light;
+
+                // @TODO do api call with lamp changing name
+            }
+        });
+
+        this.btnColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvBri.setText(String.valueOf(light.getBri()));
+
+                DimLight updated = light;
+
+                // @TODO do api call with lamp changing color
+            }
+        });
+
+        this.sbBri.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                light.setBri(sbBri.getProgress());
+                UpdateColorPanel();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
+
+    private void UpdateColorPanel() {
+        this.colorPanel.setBackgroundColor(Color.HSVToColor(255, light.getHSV()));
+        this.tvValueBri.setText(String.valueOf(light.getBri()));
+    }
+
+    //wrote this code then found out about setMin and setMax :)
+
+    private int getInRange(int value, int min, int max) {
+        if (value < min) {
+            value = min;
+        } else if (value > max) {
+            value = max;
+        }
+        return value;
+    }
+}

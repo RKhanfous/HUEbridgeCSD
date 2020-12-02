@@ -67,7 +67,7 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.container = container;
-        return inflater.inflate(R.layout.detail_fragment, container, false);
+        return inflater.inflate(R.layout.detail_fragment_hue, container, false);
     }
 
     private void init(){
