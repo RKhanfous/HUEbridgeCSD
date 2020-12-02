@@ -20,7 +20,7 @@ public class JsonData {
 
     public static final String lights = "/api/newdeveloper/lights";
     public static final String setState = "/state";
-    public static final String uri = "http://192.168.178.192:8000";
+    public static final String uri = "http://10.0.2.2:8000";
 
 
     public static String getBodyRename(String name){

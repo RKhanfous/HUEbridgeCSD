@@ -23,7 +23,6 @@ import com.example.hueemulatorapp.Application.HttpListener;
 import com.example.hueemulatorapp.Application.JsonData;
 import com.example.hueemulatorapp.Data.DimLight;
 import com.example.hueemulatorapp.Data.HueLight;
-import com.example.hueemulatorapp.Data.Lamp;
 import com.example.hueemulatorapp.Data.Light;
 import com.example.hueemulatorapp.R;
 
@@ -41,8 +40,6 @@ public class MainFragment extends Fragment implements OnItemClickListener, HttpL
     private ArrayList<DimLight> lightList;
     private ApiHueAdapter apiHueAdapter;
 
-    private HttpClient httpClient;
-
     private Context context;
     private DetailFragmentReplacer replacer;
 
@@ -59,8 +56,6 @@ public class MainFragment extends Fragment implements OnItemClickListener, HttpL
         apiHueAdapter = new ApiHueAdapter(lightList, this);
         listLampsRV.setAdapter(apiHueAdapter);
         listLampsRV.setLayoutManager(new LinearLayoutManager(this.context));
-
-        this.httpClient = new HttpClient();
 
         final SwipeRefreshLayout swipeRefreshLayout = container.findViewById(R.id.swipeToRefresh);
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(context, R.color.colorPrimary), ContextCompat.getColor(context, R.color.colorSecondary));
@@ -83,8 +78,8 @@ public class MainFragment extends Fragment implements OnItemClickListener, HttpL
 
     private void loadLights(){
         try {
-            Request requestGetLights = httpClient.get(JsonData.uri + JsonData.lights);
-            httpClient.send(requestGetLights, new GetLightsCallback(this));
+            Request requestGetLights = HttpClient.getRequest(JsonData.uri + JsonData.lights);
+            HttpClient.getInstance().send(requestGetLights, new GetLightsCallback(this));
         } catch (IOException e) {
             e.printStackTrace();
         }

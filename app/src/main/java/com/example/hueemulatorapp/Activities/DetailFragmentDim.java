@@ -17,10 +17,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.hueemulatorapp.Application.HttpClient;
+import com.example.hueemulatorapp.Application.JsonData;
+import com.example.hueemulatorapp.Application.LogCallback;
 import com.example.hueemulatorapp.Data.DimLight;
-import com.example.hueemulatorapp.Data.Lamp;
 import com.example.hueemulatorapp.Data.Light;
 import com.example.hueemulatorapp.R;
+
+import java.io.IOException;
+
+import okhttp3.Request;
 
 public class DetailFragmentDim extends Fragment {
 
@@ -122,7 +128,14 @@ public class DetailFragmentDim extends Fragment {
 
                 DimLight updated = light;
 
-                // @TODO do api call with lamp changing name
+                try {
+                    Log.d(DetailFragmentDim.class.getName(), JsonData.getBodyRename(updated.getName()));
+                    Request requestRename = HttpClient.putRequest(JsonData.uri + JsonData.lights + "/" + updated.getId(), JsonData.getBodyRename(updated.getName()));
+                    HttpClient.getInstance().send(requestRename, new LogCallback(DetailFragmentDim.class.getName() + " - Rename"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
