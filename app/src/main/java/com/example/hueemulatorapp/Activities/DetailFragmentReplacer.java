@@ -1,9 +1,9 @@
 package com.example.hueemulatorapp.Activities;
 
-import android.content.Context;
-
-import com.example.hueemulatorapp.Data.Lamp;
+import com.example.hueemulatorapp.Data.DimLight;
+import com.example.hueemulatorapp.Data.HueLight;
 
 public interface DetailFragmentReplacer {
-    void replace(Lamp lamp);
+    void replaceHue(HueLight light);
+    void replaceDim(DimLight light);
 }
