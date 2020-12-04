@@ -1,6 +1,6 @@
 package com.example.hueemulatorapp.Data;
 
-public class Light {
+public class    Light {
 
     public static final String TYPE_DIM = "Dimmable light";
     public static final String TYPE_HUE = "Extended color light";

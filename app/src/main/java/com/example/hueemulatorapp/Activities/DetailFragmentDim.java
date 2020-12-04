@@ -3,9 +3,6 @@ package com.example.hueemulatorapp.Activities;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,8 +17,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.hueemulatorapp.Application.HttpClient;
@@ -31,7 +26,6 @@ import com.example.hueemulatorapp.Data.DimLight;
 import com.example.hueemulatorapp.Data.HttpParser;
 import com.example.hueemulatorapp.Data.Light;
 import com.example.hueemulatorapp.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 
@@ -119,7 +113,7 @@ public class DetailFragmentDim extends Fragment {
         this.btnColor = container.findViewById(R.id.btn_setColor);
 
 
-        //      Set color section
+        //Set color section
         //Set color panel
         UpdateColorPanel();
 
@@ -137,7 +131,7 @@ public class DetailFragmentDim extends Fragment {
 
                 try {
                     Log.d(DetailFragmentDim.class.getName(), JsonData.getBodyRename(light.getName()));
-                    Request requestRename = HttpClient.putRequest(HttpParser.Rename(light.getIndex()), JsonData.getBodyRename(light.getName()));
+                    Request requestRename = HttpClient.putRequest(HttpParser.getInstance().rename(light.getIndex()), JsonData.getBodyRename(light.getName()));
                     HttpClient.getInstance().send(requestRename, new LogCallback(DetailFragmentDim.class.getName() + " - Rename"));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -153,8 +147,8 @@ public class DetailFragmentDim extends Fragment {
 
                 DimLight updated = light;
                 try {
-                    Request requestColor = HttpClient.putRequest(HttpParser.SetState(updated.getIndex()), JsonData.getBodyBrightness(light.getBri()));
-                    HttpClient.getInstance().send(requestColor, new LogCallback(DetailFragmentDim.class.getName()));
+                    Request requestBrightness = HttpClient.putRequest(HttpParser.getInstance().setState(updated.getIndex()), JsonData.getBodyBrightness(light.getBri()));
+                    HttpClient.getInstance().send(requestBrightness, new LogCallback(DetailFragmentDim.class.getName()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -192,11 +186,10 @@ public class DetailFragmentDim extends Fragment {
             public void onClick(View v) {
                 light.setOn(!light.isOn());
                 try {
-                    Request requestPwr = HttpClient.putRequest(HttpParser.SetState(light.getIndex()), JsonData.getBodyLightOn(light.isOn()));
+                    Request requestPwr = HttpClient.putRequest(HttpParser.getInstance().setState(light.getIndex()), JsonData.getBodyLightOn(light.isOn()));
                     HttpClient.getInstance().send(requestPwr, new LogCallback(DetailFragmentDim.class.getName()));
                     if (light.isOn()) {
                         btnPower.setBackgroundResource(R.drawable.ic_power_on);
-//                        btnPower.setBackgroundTintList(getColorStateList(R.color.colorSecondary));
                     } else {
                         btnPower.setBackgroundResource(R.drawable.ic_power_off);
                     }
@@ -206,21 +199,6 @@ public class DetailFragmentDim extends Fragment {
             }
         });
 
-    }
-
-    private ColorStateList getColorStateList(int colorId) {
-        return new ColorStateList(new int[][] {
-                new int[]{},
-                new int[]{},
-                new int[]{},
-                new int[]{},
-        },
-                new int[]{
-                        getResources().getColor(colorId),
-                        getResources().getColor(colorId),
-                        getResources().getColor(colorId),
-                        getResources().getColor(colorId)
-                });
     }
 
     private void UpdateColorPanel() {

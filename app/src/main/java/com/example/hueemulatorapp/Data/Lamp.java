@@ -30,7 +30,6 @@ public class Lamp implements Serializable {
         this.type = type;
         this.name = name;
         this.modelId = modelId;
-        this.productName = productName;
         this.lightsOn = lightsOn;
         this.bri = bri;
         this.hue = hue;
@@ -44,10 +43,6 @@ public class Lamp implements Serializable {
 
     public float[] getHSV(){
         return new float[]{(float)this.hue/(float)MAX_HUE * 360, (float)this.sat/(float)MAX_SAT, (float)this.bri/(float)MAX_BRI};
-    }
-
-    public String getProductName() {
-        return productName;
     }
 
     public void setName(String name) {

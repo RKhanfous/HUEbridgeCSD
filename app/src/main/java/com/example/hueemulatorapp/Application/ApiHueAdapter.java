@@ -12,15 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hueemulatorapp.Activities.DetailFragmentHue;
 import com.example.hueemulatorapp.Activities.OnItemClickListener;
 import com.example.hueemulatorapp.Data.DimLight;
 import com.example.hueemulatorapp.Data.HttpParser;
 import com.example.hueemulatorapp.Data.HueLight;
 import com.example.hueemulatorapp.Data.Light;
 import com.example.hueemulatorapp.R;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.List;
@@ -75,7 +72,7 @@ public class ApiHueAdapter extends RecyclerView.Adapter<ApiHueAdapter.ImageViewH
                 light.setOn(!light.isOn());
                 Request requestPwr = null;
                 try {
-                    requestPwr = HttpClient.putRequest(HttpParser.SetState(light.getIndex()), JsonData.getBodyLightOn(light.isOn()));
+                    requestPwr = HttpClient.putRequest(HttpParser.getInstance().setState(light.getIndex()), JsonData.getBodyLightOn(light.isOn()));
                     HttpClient.getInstance().send(requestPwr, new LogCallback(ApiHueAdapter.class.getName()));
                     if (light.isOn()){
                         fHolder.btnPower.setBackgroundResource(R.drawable.ic_power_on);

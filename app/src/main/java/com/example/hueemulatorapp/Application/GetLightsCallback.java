@@ -3,7 +3,6 @@ package com.example.hueemulatorapp.Application;
 import android.util.Log;
 
 import com.example.hueemulatorapp.Data.DimLight;
-import com.example.hueemulatorapp.Data.Lamp;
 
 import org.json.JSONException;
 

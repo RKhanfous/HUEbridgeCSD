@@ -1,58 +1,29 @@
 package com.example.hueemulatorapp.Application;
 
-import android.util.JsonReader;
 import android.util.Log;
 
 import com.example.hueemulatorapp.Data.DimLight;
 import com.example.hueemulatorapp.Data.HueLight;
-import com.example.hueemulatorapp.Data.Lamp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class JsonData {
 
     public static final String TAG = JsonData.class.getName();
 
-    public static final String lights = "/api/newdeveloper/lights";
-    public static final String setState = "/state";
-    public static final String uri = "http://10.0.2.2:8000";
-
-
     public static String getBodyRename(String name){
-        JSONObject body = new JSONObject();
-        try{
-            body.put("name", name);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return body.toString();
+        return "{\"name\":" + "\"" + name + "\"}";
     }
 
     public static String getBodyLightOn(Boolean lightOn){
-        JSONObject body = new JSONObject();
-        try{
-            body.put("on", lightOn);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return body.toString();
+        return "{\"on\":" + "\"" + lightOn.toString() + "\"}";
     }
 
     public static String getBodyColor(int hue, int bri, int sat){
-        JSONObject body = new JSONObject();
-        try{
-            body.put("hue", hue);
-            body.put("bri", bri);
-            body.put("sat", sat);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return body.toString();
+        return "{\"hue\":" + "\"" + hue + "\"," + "\"bri\":" + "\"" + bri + "\"," + "\"sat\":" + "\"" + sat + "\"}";
     }
 
     public static String getBodyBrightness(int bri) {
@@ -78,9 +49,9 @@ public class JsonData {
                 addingJson = response.getJSONObject(String.valueOf(indexLight));
 
                 if (isDimLight(addingJson)){
-                    lights.add(getDimLight(String.valueOf(indexLight), addingJson));
+                    lights.add(getDimLight(indexLight, addingJson));
                 } else {
-                    lights.add(getHueLight(String.valueOf(indexLight), addingJson));
+                    lights.add(getHueLight(indexLight, addingJson));
                 }
 
 
@@ -99,7 +70,7 @@ public class JsonData {
     }
 
 
-    private static DimLight getDimLight(String index, JSONObject addingJson) throws JSONException {
+    private static DimLight getDimLight(int index, JSONObject addingJson) throws JSONException {
         JSONObject state = addingJson.getJSONObject("state");
         return new DimLight(
                 index,
@@ -111,7 +82,7 @@ public class JsonData {
                 );
     }
 
-    private static HueLight getHueLight(String index, JSONObject addingJson) throws JSONException {
+    private static HueLight getHueLight(int index, JSONObject addingJson) throws JSONException {
 
         JSONObject state = addingJson.getJSONObject("state");
         return new HueLight(

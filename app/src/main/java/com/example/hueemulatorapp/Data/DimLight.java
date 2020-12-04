@@ -1,7 +1,7 @@
 package com.example.hueemulatorapp.Data;
 
 public class DimLight {
-    private String index;
+    private int index;
     private String id;
     private String name;
     private String modelId;
@@ -11,7 +11,7 @@ public class DimLight {
     private boolean on;
     private int bri;
 
-    public DimLight(String index, String id, String name, String modelId, boolean on, int bri) {
+    public DimLight(int index, String id, String name, String modelId, boolean on, int bri) {
         this.index = index;
         this.id = id;
         this.name = name;
@@ -21,7 +21,7 @@ public class DimLight {
         this.type = "Dimmable light";
     }
 
-    public String getIndex(){
+    public int getIndex(){
         return this.index;
     }
 

@@ -20,7 +20,6 @@ import com.example.hueemulatorapp.Application.ApiHueAdapter;
 import com.example.hueemulatorapp.Application.GetLightsCallback;
 import com.example.hueemulatorapp.Application.HttpClient;
 import com.example.hueemulatorapp.Application.HttpListener;
-import com.example.hueemulatorapp.Application.JsonData;
 import com.example.hueemulatorapp.Data.DimLight;
 import com.example.hueemulatorapp.Data.HttpParser;
 import com.example.hueemulatorapp.Data.HueLight;
@@ -33,7 +32,7 @@ import java.util.List;
 
 import okhttp3.Request;
 
-public class MainFragment extends Fragment implements OnItemClickListener, HttpListener{
+public class MainFragment extends Fragment implements OnItemClickListener, HttpListener {
 
     public static final String TAG = "MAIN_FRAGMENT";
 
@@ -79,7 +78,7 @@ public class MainFragment extends Fragment implements OnItemClickListener, HttpL
 
     private void loadLights(){
         try {
-            Request requestGetLights = HttpClient.getRequest(HttpParser.GetLights());
+            Request requestGetLights = HttpClient.getRequest(HttpParser.getInstance().getLights());
             HttpClient.getInstance().send(requestGetLights, new GetLightsCallback(this));
         } catch (IOException e) {
             e.printStackTrace();
