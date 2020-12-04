@@ -1,18 +1,16 @@
 package com.example.hueemulatorapp.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.hueemulatorapp.Data.DimLight;
+import com.example.hueemulatorapp.Data.HueLight;
 import com.example.hueemulatorapp.Data.Lamp;
+import com.example.hueemulatorapp.Data.Light;
 import com.example.hueemulatorapp.R;
 
 public class MainActivity extends AppCompatActivity implements DetailFragmentReplacer {
@@ -35,10 +33,19 @@ public class MainActivity extends AppCompatActivity implements DetailFragmentRep
     }
 
     @Override
-    public void replace(Lamp lamp) {
+    public void replaceHue(HueLight light) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_framelayout, new DetailFragment(lamp), DetailFragment.TAG)
-                .addToBackStack(DetailFragment.TAG)
+                .replace(R.id.main_framelayout, new DetailFragmentHue(light), DetailFragmentHue.TAG)
+                .addToBackStack(DetailFragmentHue.TAG)
+                .commit();
+    }
+
+    @Override
+    public void replaceDim(DimLight light) {
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_framelayout, new DetailFragmentDim(light), DetailFragmentDim.TAG)
+                .addToBackStack(DetailFragmentDim.TAG)
                 .commit();
     }
 }

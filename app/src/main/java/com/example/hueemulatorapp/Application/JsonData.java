@@ -2,6 +2,8 @@ package com.example.hueemulatorapp.Application;
 
 import android.util.Log;
 
+import com.example.hueemulatorapp.Data.DimLight;
+import com.example.hueemulatorapp.Data.HueLight;
 import com.example.hueemulatorapp.Data.Lamp;
 
 import org.json.JSONException;
@@ -15,7 +17,7 @@ public class JsonData {
 
     public static final String lights = "/api/newdeveloper/lights";
     public static final String setState = "/state";
-    public static final String uri = "http://192.168.178.192:8000";
+    public static final String uri = "http://10.0.2.2:8000";
 
 
     public static String getBodyRename(String name){
@@ -32,30 +34,43 @@ public class JsonData {
         return "{\"hue\":" + "\"" + hue + "\"," + "\"bri\":" + "\"" + bri + "\"," + "\"sat\":" + "\"" + sat + "\"}";
     }
 
-    public static ArrayList<Lamp> readGetLightsResponse(String jsonResponse) throws JSONException {
+    public static String getBodyBrightness(int bri) {
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("bri", bri);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return body.toString();
+    }
+
+    public static ArrayList<DimLight> readGetLightsResponse(String jsonResponse) throws JSONException {
+
         Log.i(JsonData.class.getName(), jsonResponse);
         JSONObject response = new JSONObject(jsonResponse);
-        ArrayList<Lamp> lamps = new ArrayList<>();
-        boolean done = false; int indexLamp = 1; JSONObject addingJson;
+        ArrayList<DimLight> lights = new ArrayList<>();
+
+        boolean done = false; int indexLight = 1; JSONObject addingJson;
         while (!done){
             try{
-                addingJson = response.getJSONObject(String.valueOf(indexLamp));
+                addingJson = response.getJSONObject(String.valueOf(indexLight));
 
                 if (isDimLight(addingJson)){
-                    lamps.add(getDimLamp(addingJson));
+                    lights.add(getDimLight(String.valueOf(indexLight), addingJson));
                 } else {
-                    lamps.add(getHueLamp(addingJson));
+                    lights.add(getHueLight(String.valueOf(indexLight), addingJson));
                 }
 
 
             } catch (JSONException e){
                 done = true;
-                Log.d(TAG, "Stopped finding lights at: " + indexLamp);
+                Log.d(TAG, "Stopped finding lights at: " + indexLight);
             }
-            indexLamp++;
+            indexLight++;
         }
 
-        return lamps;
+        return lights;
     }
 
     private static boolean isDimLight(JSONObject lampJson) throws JSONException {
@@ -63,34 +78,30 @@ public class JsonData {
     }
 
 
-    private static Lamp getDimLamp(JSONObject addingJson) throws JSONException {
+    private static DimLight getDimLight(String index, JSONObject addingJson) throws JSONException {
         JSONObject state = addingJson.getJSONObject("state");
-        return new Lamp(
-                addingJson.getString("uniqueid"), //Get unique ID
-                addingJson.getString("type"), //Get type.
-                addingJson.getString("name"), //Get Name
-                addingJson.getString("modelid"), //Get model ID
-                "dummy",
-                state.getBoolean("on"), // Get lights on
-                state.getInt("bri"), // Get brightness
-                0, // Get Hue
-                0, // Get saturation
-                "none" // Get effect
-        );
+        return new DimLight(
+                index,
+                addingJson.getString("uniqueid"),
+                addingJson.getString("name"),
+                addingJson.getString("modelid"),
+                state.getBoolean("on"),
+                state.getInt("bri")
+                );
     }
 
-    private static Lamp getHueLamp(JSONObject addingJson) throws JSONException {
+    private static HueLight getHueLight(String index, JSONObject addingJson) throws JSONException {
+
         JSONObject state = addingJson.getJSONObject("state");
-        return new Lamp(
+        return new HueLight(
+                index,
                 addingJson.getString("uniqueid"), //Get unique ID
-                addingJson.getString("type"), //Get type.
                 addingJson.getString("name"), //Get Name
                 addingJson.getString("modelid"), //Get model ID
-                "dummy",
-                state.getBoolean("on"), // Get lights on
-                state.getInt("bri"), // Get brightness
-                state.getInt("hue"), // Get Hue
-                state.getInt("sat"), // Get saturation
+                state.getBoolean("on"),
+                state.getInt("hue"), // Get brightness
+                state.getInt("sat"), // Get Hue
+                state.getInt("bri"), // Get saturation
                 state.getString("effect") // Get effect
         );
     }

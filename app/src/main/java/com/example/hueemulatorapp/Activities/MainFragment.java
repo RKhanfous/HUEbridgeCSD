@@ -21,7 +21,10 @@ import com.example.hueemulatorapp.Application.GetLightsCallback;
 import com.example.hueemulatorapp.Application.HttpClient;
 import com.example.hueemulatorapp.Application.HttpListener;
 import com.example.hueemulatorapp.Application.JsonData;
-import com.example.hueemulatorapp.Data.Lamp;
+import com.example.hueemulatorapp.Data.DimLight;
+import com.example.hueemulatorapp.Data.HttpParser;
+import com.example.hueemulatorapp.Data.HueLight;
+import com.example.hueemulatorapp.Data.Light;
 import com.example.hueemulatorapp.R;
 
 import java.io.IOException;
@@ -35,10 +38,8 @@ public class MainFragment extends Fragment implements OnItemClickListener, HttpL
     public static final String TAG = "MAIN_FRAGMENT";
 
     private RecyclerView listLampsRV;
-    private ArrayList<Lamp> lampList;
+    private ArrayList<DimLight> lightList;
     private ApiHueAdapter apiHueAdapter;
-
-    private HttpClient httpClient;
 
     private Context context;
     private DetailFragmentReplacer replacer;
@@ -51,13 +52,11 @@ public class MainFragment extends Fragment implements OnItemClickListener, HttpL
     }
 
     private void init(){
-        lampList = new ArrayList<>();
+        lightList = new ArrayList<>();
         listLampsRV = container.findViewById(R.id.lampListRV);
-        apiHueAdapter = new ApiHueAdapter(lampList, this);
+        apiHueAdapter = new ApiHueAdapter(lightList, this);
         listLampsRV.setAdapter(apiHueAdapter);
         listLampsRV.setLayoutManager(new LinearLayoutManager(this.context));
-
-        this.httpClient = new HttpClient();
 
         final SwipeRefreshLayout swipeRefreshLayout = container.findViewById(R.id.swipeToRefresh);
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(context, R.color.colorPrimary), ContextCompat.getColor(context, R.color.colorSecondary));
@@ -72,14 +71,16 @@ public class MainFragment extends Fragment implements OnItemClickListener, HttpL
 
     }
     private void reloadLights(){
-        this.lampList = new ArrayList<>();
+        this.lightList = new ArrayList<>();
+        apiHueAdapter = new ApiHueAdapter(lightList, this);
+        listLampsRV.setAdapter(apiHueAdapter);
         loadLights();
     }
 
     private void loadLights(){
         try {
-            Request requestGetLights = httpClient.get(JsonData.uri + JsonData.lights);
-            httpClient.send(requestGetLights, new GetLightsCallback(this));
+            Request requestGetLights = HttpClient.getRequest(HttpParser.GetLights());
+            HttpClient.getInstance().send(requestGetLights, new GetLightsCallback(this));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,8 +100,8 @@ public class MainFragment extends Fragment implements OnItemClickListener, HttpL
     }
 
     @Override
-    public void onLightsAvailable(List<Lamp> lamps) {
-        lampList.addAll(lamps);
+    public void onLightsAvailable(List<DimLight> lights) {
+        lightList.addAll(lights);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -111,7 +112,13 @@ public class MainFragment extends Fragment implements OnItemClickListener, HttpL
 
     @Override
     public void onItemClick(int clickedPosition) {
-        replacer.replace(lampList.get(clickedPosition));
+        DimLight selected = lightList.get(clickedPosition);
+
+        if (selected.getType().equals(Light.TYPE_HUE)){
+            replacer.replaceHue((HueLight)lightList.get(clickedPosition));
+        } else if (selected.getType().equals(Light.TYPE_DIM)){
+            replacer.replaceDim(lightList.get(clickedPosition));
+        }
         Log.d(MainFragment.class.getName(), "Clicked on item no. " + clickedPosition);
     }
 }

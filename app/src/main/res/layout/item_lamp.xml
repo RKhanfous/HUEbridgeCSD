@@ -9,24 +9,48 @@
     <TextView
         android:id="@+id/tvNameLamp"
         android:layout_margin="8dp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/tvModelId"
         android:text="@string/placeholder_lamp_name"
         android:textSize="28sp"
         android:textColor="@color/colorBlack"
         />
+
     <TextView
-        android:id="@+id/tvModelIdLamp"
+        android:id="@+id/tvModelId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvNameLamp"
+        app:layout_constraintBottom_toBottomOf="@id/tvNameLamp"
+        android:text="PLCDHR mId"
+        />
+
+    <TextView
+        android:id="@+id/tvTypeLamp"
         android:layout_margin="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tvNameLamp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/placeholder_lamp_modelid"
+        android:text="@string/placeholder_lamp_type"
         android:textSize="16sp"
         />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/btnPower"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvNameLamp"
+        android:background="@drawable/ic_power_on"
+        />
+
+
 
     <ImageView
         android:id="@+id/color_bar"
@@ -36,8 +60,8 @@
         android:background="@color/colorPrimary"
         app:layout_constraintTop_toBottomOf="@id/tvNameLamp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/tvModelIdLamp"
+        app:layout_constraintLeft_toRightOf="@id/btnPower"
+        app:layout_constraintRight_toLeftOf="@id/tvTypeLamp"
 
         />
 
