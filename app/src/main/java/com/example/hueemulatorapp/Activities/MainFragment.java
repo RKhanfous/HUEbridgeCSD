@@ -20,7 +20,6 @@ import com.example.hueemulatorapp.Application.ApiHueAdapter;
 import com.example.hueemulatorapp.Application.GetLightsCallback;
 import com.example.hueemulatorapp.Application.HttpClient;
 import com.example.hueemulatorapp.Application.HttpListener;
-import com.example.hueemulatorapp.Application.JsonData;
 import com.example.hueemulatorapp.Data.DimLight;
 import com.example.hueemulatorapp.Data.HttpParser;
 import com.example.hueemulatorapp.Data.HueLight;
