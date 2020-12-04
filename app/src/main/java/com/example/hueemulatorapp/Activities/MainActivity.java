@@ -9,8 +9,6 @@ import android.widget.FrameLayout;
 
 import com.example.hueemulatorapp.Data.DimLight;
 import com.example.hueemulatorapp.Data.HueLight;
-import com.example.hueemulatorapp.Data.Lamp;
-import com.example.hueemulatorapp.Data.Light;
 import com.example.hueemulatorapp.R;
 
 public class MainActivity extends AppCompatActivity implements DetailFragmentReplacer {
@@ -28,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements DetailFragmentRep
         Fragment mainFragment = new MainFragment(this, this);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, mainFragment, MainFragment.TAG)
-                .addToBackStack(MainFragment.TAG)
                 .commit();
     }
 
