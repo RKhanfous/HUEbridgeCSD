@@ -10,6 +10,7 @@ public class Lamp implements Serializable {
     private String modelId;
     private String productName;
 
+    private boolean lightsOn;
     private int bri;
     private int hue;
     private int sat;
@@ -24,16 +25,21 @@ public class Lamp implements Serializable {
     public static final String EFFECT_NULL = "none";
     public static final String EFFECT_COLOR_LOOP = "colorloop";
 
-    public Lamp(String id, String type, String name, String modelId, String productName, int bri, int hue, int sat, String effect) {
+    public Lamp(String id, String type, String name, String modelId, String productName, boolean lightsOn, int bri, int hue, int sat, String effect) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.modelId = modelId;
         this.productName = productName;
+        this.lightsOn = lightsOn;
         this.bri = bri;
         this.hue = hue;
         this.sat = sat;
         this.effect = effect;
+    }
+
+    public static Lamp Dummy(){
+        return new Lamp("id", "type", "name", "modelid", "productname", true, 0, 0, 0, "none");
     }
 
     public float[] getHSV(){
