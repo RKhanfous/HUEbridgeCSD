@@ -23,7 +23,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:textColor="@color/colorPrimary"
             android:textSize="32sp"
-            android:text="Hue Emulator App"
+            android:text="@string/app_name"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

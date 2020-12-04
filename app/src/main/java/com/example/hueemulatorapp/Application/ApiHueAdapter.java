@@ -72,7 +72,7 @@ public class ApiHueAdapter extends RecyclerView.Adapter<ApiHueAdapter.ImageViewH
                 light.setOn(!light.isOn());
                 Request requestPwr = null;
                 try {
-                    requestPwr = HttpClient.putRequest(HttpParser.setState(light.getIndex()), JsonData.getBodyLightOn(light.isOn()));
+                    requestPwr = HttpClient.putRequest(HttpParser.getInstance().setState(light.getIndex()), JsonData.getBodyLightOn(light.isOn()));
                     HttpClient.getInstance().send(requestPwr, new LogCallback(ApiHueAdapter.class.getName()));
                     if (light.isOn()){
                         fHolder.btnPower.setBackgroundResource(R.drawable.ic_power_on);
