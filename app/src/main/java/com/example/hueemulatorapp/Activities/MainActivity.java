@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements DetailFragmentRep
         Fragment mainFragment = new MainFragment(this, this);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, mainFragment, MainFragment.TAG)
-                .addToBackStack(MainFragment.TAG)
                 .commit();
     }
 
