@@ -24,6 +24,6 @@ public class LogCallback implements Callback {
 
     @Override
     public void onResponse(Call call, Response response) throws IOException {
-        Log.e(TAG, response.header()
+        Log.e(TAG, response.body().string());
     }
 }

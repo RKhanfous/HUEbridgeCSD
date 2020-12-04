@@ -12,6 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/tvModelId"
         android:text="@string/placeholder_lamp_name"
         android:textSize="28sp"
@@ -40,6 +41,17 @@
         android:textSize="16sp"
         />
 
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/btnPower"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvNameLamp"
+        android:background="@drawable/ic_power_on"
+        />
+
+
+
     <ImageView
         android:id="@+id/color_bar"
         android:layout_width="0dp"
@@ -48,7 +60,7 @@
         android:background="@color/colorPrimary"
         app:layout_constraintTop_toBottomOf="@id/tvNameLamp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/btnPower"
         app:layout_constraintRight_toLeftOf="@id/tvTypeLamp"
 
         />

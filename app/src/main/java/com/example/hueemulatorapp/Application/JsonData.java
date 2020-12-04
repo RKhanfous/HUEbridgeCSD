@@ -55,6 +55,17 @@ public class JsonData {
         return body.toString();
     }
 
+    public static String getBodyBrightness(int bri) {
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("bri", bri);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return body.toString();
+    }
+
     public static ArrayList<DimLight> readGetLightsResponse(String jsonResponse) throws JSONException {
 
         Log.i(JsonData.class.getName(), jsonResponse);
@@ -67,9 +78,9 @@ public class JsonData {
                 addingJson = response.getJSONObject(String.valueOf(indexLight));
 
                 if (isDimLight(addingJson)){
-                    lights.add(getDimLight(addingJson));
+                    lights.add(getDimLight(String.valueOf(indexLight), addingJson));
                 } else {
-                    lights.add(getHueLight(addingJson));
+                    lights.add(getHueLight(String.valueOf(indexLight), addingJson));
                 }
 
 
@@ -83,40 +94,15 @@ public class JsonData {
         return lights;
     }
 
-    public static ArrayList<Lamp> readGetLampsResponse(String jsonResponse) throws JSONException {
-        Log.i(JsonData.class.getName(), jsonResponse);
-        JSONObject response = new JSONObject(jsonResponse);
-        ArrayList<Lamp> lamps = new ArrayList<>();
-        boolean done = false; int indexLamp = 1; JSONObject addingJson;
-        while (!done){
-            try{
-                addingJson = response.getJSONObject(String.valueOf(indexLamp));
-
-                if (isDimLight(addingJson)){
-                    lamps.add(getDimLamp(addingJson));
-                } else {
-                    lamps.add(getHueLamp(addingJson));
-                }
-
-
-            } catch (JSONException e){
-                done = true;
-                Log.d(TAG, "Stopped finding lights at: " + indexLamp);
-            }
-            indexLamp++;
-        }
-
-        return lamps;
-    }
-
     private static boolean isDimLight(JSONObject lampJson) throws JSONException {
         return lampJson.getString("type").equals("Dimmable light");
     }
 
 
-    private static DimLight getDimLight(JSONObject addingJson) throws JSONException {
+    private static DimLight getDimLight(String index, JSONObject addingJson) throws JSONException {
         JSONObject state = addingJson.getJSONObject("state");
         return new DimLight(
+                index,
                 addingJson.getString("uniqueid"),
                 addingJson.getString("name"),
                 addingJson.getString("modelid"),
@@ -125,49 +111,18 @@ public class JsonData {
                 );
     }
 
-    private static HueLight getHueLight(JSONObject addingJson) throws JSONException {
+    private static HueLight getHueLight(String index, JSONObject addingJson) throws JSONException {
 
         JSONObject state = addingJson.getJSONObject("state");
         return new HueLight(
+                index,
                 addingJson.getString("uniqueid"), //Get unique ID
                 addingJson.getString("name"), //Get Name
                 addingJson.getString("modelid"), //Get model ID
                 state.getBoolean("on"),
-                state.getInt("bri"), // Get brightness
-                state.getInt("hue"), // Get Hue
-                state.getInt("sat"), // Get saturation
-                state.getString("effect") // Get effect
-        );
-    }
-
-    private static Lamp getDimLamp(JSONObject addingJson) throws JSONException {
-        JSONObject state = addingJson.getJSONObject("state");
-        return new Lamp(
-                addingJson.getString("uniqueid"), //Get unique ID
-                addingJson.getString("type"), //Get type.
-                addingJson.getString("name"), //Get Name
-                addingJson.getString("modelid"), //Get model ID
-                "dummy",
-                state.getBoolean("on"), // Get lights on
-                state.getInt("bri"), // Get brightness
-                0, // Get Hue
-                0, // Get saturation
-                "none" // Get effect
-        );
-    }
-
-    private static Lamp getHueLamp(JSONObject addingJson) throws JSONException {
-        JSONObject state = addingJson.getJSONObject("state");
-        return new Lamp(
-                addingJson.getString("uniqueid"), //Get unique ID
-                addingJson.getString("type"), //Get type.
-                addingJson.getString("name"), //Get Name
-                addingJson.getString("modelid"), //Get model ID
-                "dummy",
-                state.getBoolean("on"), // Get lights on
-                state.getInt("bri"), // Get brightness
-                state.getInt("hue"), // Get Hue
-                state.getInt("sat"), // Get saturation
+                state.getInt("hue"), // Get brightness
+                state.getInt("sat"), // Get Hue
+                state.getInt("bri"), // Get saturation
                 state.getString("effect") // Get effect
         );
     }

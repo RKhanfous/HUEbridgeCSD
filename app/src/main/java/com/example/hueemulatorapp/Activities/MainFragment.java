@@ -22,6 +22,7 @@ import com.example.hueemulatorapp.Application.HttpClient;
 import com.example.hueemulatorapp.Application.HttpListener;
 import com.example.hueemulatorapp.Application.JsonData;
 import com.example.hueemulatorapp.Data.DimLight;
+import com.example.hueemulatorapp.Data.HttpParser;
 import com.example.hueemulatorapp.Data.HueLight;
 import com.example.hueemulatorapp.Data.Light;
 import com.example.hueemulatorapp.R;
@@ -78,7 +79,7 @@ public class MainFragment extends Fragment implements OnItemClickListener, HttpL
 
     private void loadLights(){
         try {
-            Request requestGetLights = HttpClient.getRequest(JsonData.uri + JsonData.lights);
+            Request requestGetLights = HttpClient.getRequest(HttpParser.GetLights());
             HttpClient.getInstance().send(requestGetLights, new GetLightsCallback(this));
         } catch (IOException e) {
             e.printStackTrace();
