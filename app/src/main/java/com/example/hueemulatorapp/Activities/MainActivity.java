@@ -1,16 +1,14 @@
 package com.example.hueemulatorapp.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.example.hueemulatorapp.Data.DimLight;
 import com.example.hueemulatorapp.Data.HueLight;
-import com.example.hueemulatorapp.Data.Lamp;
-import com.example.hueemulatorapp.Data.Light;
 import com.example.hueemulatorapp.R;
 
 public class MainActivity extends AppCompatActivity implements DetailFragmentReplacer {
