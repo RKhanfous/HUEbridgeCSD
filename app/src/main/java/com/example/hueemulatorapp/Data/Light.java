@@ -16,6 +16,4 @@ public class    Light {
     public static final int MAX_HUE = 65535;
     public static final int MIN_SAT = 0;
     public static final int MAX_SAT = 254;
-    public static final String EFFECT_NULL = "none";
-    public static final String EFFECT_COLOR_LOOP = "colorloop";
 }
