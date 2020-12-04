@@ -21,7 +21,6 @@ import androidx.fragment.app.Fragment;
 import com.example.hueemulatorapp.Application.HttpClient;
 import com.example.hueemulatorapp.Application.JsonData;
 import com.example.hueemulatorapp.Application.LogCallback;
-import com.example.hueemulatorapp.Data.DimLight;
 import com.example.hueemulatorapp.Data.HttpParser;
 import com.example.hueemulatorapp.Data.HueLight;
 import com.example.hueemulatorapp.Data.Lamp;
@@ -158,7 +157,7 @@ public class DetailFragmentHue extends Fragment {
 
                 try {
                     Log.d(DetailFragmentDim.class.getName(), JsonData.getBodyRename(light.getName()));
-                    Request requestRename = HttpClient.putRequest(HttpParser.Rename(light.getIndex()), JsonData.getBodyRename(light.getName()));
+                    Request requestRename = HttpClient.putRequest(HttpParser.rename(light.getIndex()), JsonData.getBodyRename(light.getName()));
                     HttpClient.getInstance().send(requestRename, new LogCallback(DetailFragmentDim.class.getName() + " - Rename"));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -174,7 +173,7 @@ public class DetailFragmentHue extends Fragment {
                 tvBri.setText(String.valueOf(light.getBri()));
 
                 try {
-                    Request request = HttpClient.putRequest(HttpParser.SetState(light.getIndex()), JsonData.getBodyColor(light.getHue(), light.getBri(), light.getSat()));
+                    Request request = HttpClient.putRequest(HttpParser.setState(light.getIndex()), JsonData.getBodyColor(light.getHue(), light.getBri(), light.getSat()));
                     HttpClient.getInstance().send(request, new LogCallback(DetailFragmentHue.class.getName()));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -250,7 +249,7 @@ public class DetailFragmentHue extends Fragment {
             public void onClick(View v) {
                 light.setOn(!light.isOn());
                 try {
-                    Request requestPwr = HttpClient.putRequest(HttpParser.SetState(light.getIndex()), JsonData.getBodyLightOn(light.isOn()));
+                    Request requestPwr = HttpClient.putRequest(HttpParser.setState(light.getIndex()), JsonData.getBodyLightOn(light.isOn()));
                     HttpClient.getInstance().send(requestPwr, new LogCallback(DetailFragmentHue.class.getName()));
                     if (light.isOn()) {
                         btnPower.setBackgroundResource(R.drawable.ic_power_on);

@@ -6,16 +6,16 @@ public class HttpParser {
     private static final String setState = "/state";
     private static final String uri = "http://10.0.2.2:8000";
 
-    public static String GetLights(){
+    public static String getLights(){
         return uri + lights;
     }
 
-    public static String Rename(String id){
-        return uri + lights + "/" + id;
+    public static String rename(int index){
+        return uri + lights + "/" + index;
     }
 
-    public static String SetState(String id){
-        return uri + lights + "/" + id + setState;
+    public static String setState(int index){
+        return uri + lights + "/" + index + setState;
     }
 
 

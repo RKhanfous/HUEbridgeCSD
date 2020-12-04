@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class HueLightTest {
 
     HueLight makeTestVar(){
-        HueLight hueLight = new HueLight("1", "TESTID", "TESTNAME", "TESTMODEL", true, 123, 123, 123, "TEST EFFECT");
+        HueLight hueLight = new HueLight(1, "TESTID", "TESTNAME", "TESTMODEL", true, 123, 123, 123, "TEST EFFECT");
         return hueLight;
     }
 
