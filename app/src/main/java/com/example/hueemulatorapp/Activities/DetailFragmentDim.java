@@ -147,8 +147,8 @@ public class DetailFragmentDim extends Fragment {
 
                 DimLight updated = light;
                 try {
-                    Request requestColor = HttpClient.putRequest(HttpParser.getInstance().setState(updated.getIndex()), JsonData.getBodyBrightness(light.getBri()));
-                    HttpClient.getInstance().send(requestColor, new LogCallback(DetailFragmentDim.class.getName()));
+                    Request requestBrightness = HttpClient.putRequest(HttpParser.getInstance().setState(updated.getIndex()), JsonData.getBodyBrightness(light.getBri()));
+                    HttpClient.getInstance().send(requestBrightness, new LogCallback(DetailFragmentDim.class.getName()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -190,7 +190,6 @@ public class DetailFragmentDim extends Fragment {
                     HttpClient.getInstance().send(requestPwr, new LogCallback(DetailFragmentDim.class.getName()));
                     if (light.isOn()) {
                         btnPower.setBackgroundResource(R.drawable.ic_power_on);
-//                        btnPower.setBackgroundTintList(getColorStateList(R.color.colorSecondary));
                     } else {
                         btnPower.setBackgroundResource(R.drawable.ic_power_off);
                     }
@@ -200,21 +199,6 @@ public class DetailFragmentDim extends Fragment {
             }
         });
 
-    }
-
-    private ColorStateList getColorStateList(int colorId) {
-        return new ColorStateList(new int[][] {
-                new int[]{},
-                new int[]{},
-                new int[]{},
-                new int[]{},
-        },
-                new int[]{
-                        getResources().getColor(colorId),
-                        getResources().getColor(colorId),
-                        getResources().getColor(colorId),
-                        getResources().getColor(colorId)
-                });
     }
 
     private void UpdateColorPanel() {

@@ -1,7 +1,5 @@
 package com.example.hueemulatorapp.Data;
 
-import com.example.hueemulatorapp.Application.HttpClient;
-
 public class HttpParser {
 
     private static final String lights = "/api/newdeveloper/lights";

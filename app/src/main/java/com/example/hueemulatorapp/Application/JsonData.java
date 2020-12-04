@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.example.hueemulatorapp.Data.DimLight;
 import com.example.hueemulatorapp.Data.HueLight;
-import com.example.hueemulatorapp.Data.Lamp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,16 +14,9 @@ public class JsonData {
 
     public static final String TAG = JsonData.class.getName();
 
-    public static final String lights = "/api/newdeveloper/lights";
-    public static final String setState = "/state";
-    public static final String uri = "http://10.0.2.2:8000";
-
-
     public static String getBodyRename(String name){
         return "{\"name\":" + "\"" + name + "\"}";
     }
-
-
 
     public static String getBodyLightOn(Boolean lightOn){
         return "{\"on\":" + "\"" + lightOn.toString() + "\"}";
