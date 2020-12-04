@@ -78,7 +78,7 @@ public class MainFragment extends Fragment implements OnItemClickListener, HttpL
 
     private void loadLights(){
         try {
-            Request requestGetLights = HttpClient.getRequest(HttpParser.GetLights());
+            Request requestGetLights = HttpClient.getRequest(HttpParser.getInstance().getLights());
             HttpClient.getInstance().send(requestGetLights, new GetLightsCallback(this));
         } catch (IOException e) {
             e.printStackTrace();

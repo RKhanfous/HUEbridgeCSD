@@ -57,9 +57,9 @@ public class JsonData {
                 addingJson = response.getJSONObject(String.valueOf(indexLight));
 
                 if (isDimLight(addingJson)){
-                    lights.add(getDimLight(String.valueOf(indexLight), addingJson));
+                    lights.add(getDimLight(indexLight, addingJson));
                 } else {
-                    lights.add(getHueLight(String.valueOf(indexLight), addingJson));
+                    lights.add(getHueLight(indexLight, addingJson));
                 }
 
 
@@ -78,7 +78,7 @@ public class JsonData {
     }
 
 
-    private static DimLight getDimLight(String index, JSONObject addingJson) throws JSONException {
+    private static DimLight getDimLight(int index, JSONObject addingJson) throws JSONException {
         JSONObject state = addingJson.getJSONObject("state");
         return new DimLight(
                 index,
@@ -90,7 +90,7 @@ public class JsonData {
                 );
     }
 
-    private static HueLight getHueLight(String index, JSONObject addingJson) throws JSONException {
+    private static HueLight getHueLight(int index, JSONObject addingJson) throws JSONException {
 
         JSONObject state = addingJson.getJSONObject("state");
         return new HueLight(

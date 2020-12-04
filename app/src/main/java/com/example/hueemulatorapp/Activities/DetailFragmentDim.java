@@ -131,7 +131,7 @@ public class DetailFragmentDim extends Fragment {
 
                 try {
                     Log.d(DetailFragmentDim.class.getName(), JsonData.getBodyRename(light.getName()));
-                    Request requestRename = HttpClient.putRequest(HttpParser.Rename(light.getIndex()), JsonData.getBodyRename(light.getName()));
+                    Request requestRename = HttpClient.putRequest(HttpParser.getInstance().rename(light.getIndex()), JsonData.getBodyRename(light.getName()));
                     HttpClient.getInstance().send(requestRename, new LogCallback(DetailFragmentDim.class.getName() + " - Rename"));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -147,7 +147,7 @@ public class DetailFragmentDim extends Fragment {
 
                 DimLight updated = light;
                 try {
-                    Request requestColor = HttpClient.putRequest(HttpParser.SetState(updated.getIndex()), JsonData.getBodyBrightness(light.getBri()));
+                    Request requestColor = HttpClient.putRequest(HttpParser.getInstance().setState(updated.getIndex()), JsonData.getBodyBrightness(light.getBri()));
                     HttpClient.getInstance().send(requestColor, new LogCallback(DetailFragmentDim.class.getName()));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -186,7 +186,7 @@ public class DetailFragmentDim extends Fragment {
             public void onClick(View v) {
                 light.setOn(!light.isOn());
                 try {
-                    Request requestPwr = HttpClient.putRequest(HttpParser.SetState(light.getIndex()), JsonData.getBodyLightOn(light.isOn()));
+                    Request requestPwr = HttpClient.putRequest(HttpParser.getInstance().setState(light.getIndex()), JsonData.getBodyLightOn(light.isOn()));
                     HttpClient.getInstance().send(requestPwr, new LogCallback(DetailFragmentDim.class.getName()));
                     if (light.isOn()) {
                         btnPower.setBackgroundResource(R.drawable.ic_power_on);

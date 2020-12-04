@@ -7,14 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class DimLightTest {
 
     DimLight makeTestVar(){
-        DimLight dimLight = new DimLight("1", "TESTID", "TESTOBJECT", "TESTMODEL", true, 254);
+        DimLight dimLight = new DimLight(1, "TESTID", "TESTOBJECT", "TESTMODEL", true, 254);
         return dimLight;
     }
 
     @Test
     void getIndexTest() {
         DimLight testDimLight = makeTestVar();
-        String output = "1";
+        int output = 1;
         assertEquals(output, testDimLight.getIndex());
     }
 
