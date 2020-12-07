@@ -184,7 +184,7 @@ public class DetailFragmentHue extends Fragment {
         this.sbHue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                light.setHue(getInRange(sbHue.getProgress(), Lamp.MIN_HUE, Lamp.MAX_HUE));
+                light.setHue(getInRange(sbHue.getProgress(), Light.MIN_HUE, Light.MAX_HUE));
                 UpdateColorPanel();
             }
 
