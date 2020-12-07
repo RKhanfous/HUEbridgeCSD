@@ -1,7 +1,6 @@
 package com.example.hueemulatorapp.Activities;
 
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;

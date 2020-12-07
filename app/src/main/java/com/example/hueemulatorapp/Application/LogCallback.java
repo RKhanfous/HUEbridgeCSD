@@ -1,7 +1,6 @@
 package com.example.hueemulatorapp.Application;
 
 import android.util.Log;
-import android.view.View;
 
 import java.io.IOException;
 

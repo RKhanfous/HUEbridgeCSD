@@ -85,33 +85,6 @@ public class ApiHueAdapter extends RecyclerView.Adapter<ApiHueAdapter.ImageViewH
 
             }
         });
-
-        //            final ImageButton btnPower = container.findViewById(R.id.btnPower);
-//
-//            if (light.isOn()){
-//                btnPower.setBackgroundResource(R.drawable.ic_power_on);
-//            } else {
-//                btnPower.setBackgroundResource(R.drawable.ic_power_off);
-//            }
-//
-//            btnPower.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    light.setOn(!light.isOn());
-//                    try {
-//                        Request requestPwr = HttpClient.putRequest(HttpParser.SetState(light.getIndex()), JsonData.getBodyLightOn(light.isOn()));
-//                        HttpClient.getInstance().send(requestPwr, new LogCallback(DetailFragmentHue.class.getName()));
-//                        if (light.isOn()) {
-//                            btnPower.setBackgroundResource(R.drawable.ic_power_on);
-////                        btnPower.setBackgroundTintList(getColorStateList(R.color.colorSecondary));
-//                        } else {
-//                            btnPower.setBackgroundResource(R.drawable.ic_power_off);
-//                        }
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
     }
 
     @Override

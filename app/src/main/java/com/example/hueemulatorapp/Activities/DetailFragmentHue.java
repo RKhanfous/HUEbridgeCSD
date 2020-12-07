@@ -23,7 +23,6 @@ import com.example.hueemulatorapp.Application.JsonData;
 import com.example.hueemulatorapp.Application.LogCallback;
 import com.example.hueemulatorapp.Data.HttpParser;
 import com.example.hueemulatorapp.Data.HueLight;
-import com.example.hueemulatorapp.Data.Lamp;
 import com.example.hueemulatorapp.Data.Light;
 import com.example.hueemulatorapp.R;
 
@@ -185,7 +184,7 @@ public class DetailFragmentHue extends Fragment {
         this.sbHue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                light.setHue(getInRange(sbHue.getProgress(), Lamp.MIN_HUE, Lamp.MAX_HUE));
+                light.setHue(getInRange(sbHue.getProgress(), Light.MIN_HUE, Light.MAX_HUE));
                 UpdateColorPanel();
             }
 
@@ -253,7 +252,6 @@ public class DetailFragmentHue extends Fragment {
                     HttpClient.getInstance().send(requestPwr, new LogCallback(DetailFragmentHue.class.getName()));
                     if (light.isOn()) {
                         btnPower.setBackgroundResource(R.drawable.ic_power_on);
-//                        btnPower.setBackgroundTintList(getColorStateList(R.color.colorSecondary));
                     } else {
                         btnPower.setBackgroundResource(R.drawable.ic_power_off);
                     }
@@ -270,8 +268,6 @@ public class DetailFragmentHue extends Fragment {
         this.tvValueSat.setText(String.valueOf(light.getSat()));
         this.tvValueBri.setText(String.valueOf(light.getBri()));
     }
-
-    //wrote this code then found out about setMin and setMax :)
 
     private int getInRange(int value, int min, int max){
         if (value < min){
